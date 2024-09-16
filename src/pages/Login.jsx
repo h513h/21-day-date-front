@@ -1,72 +1,62 @@
-// src/pages/Login.jsx
 import React, { useState } from 'react';
-import Footer from '../components/Footer';
-import { login } from '../api';
 import { useNavigate } from 'react-router-dom';
-import { setUsername as setStoredUsername } from '../utils/LocalStorageUtils';
+import { login } from '../api';
+import { useAppContext } from '../AppContext';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { setUsername: setContextUsername } = useAppContext();
 
-  const handleLogin = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
     try {
       const response = await login(username, password);
-      if (response.message === 'Login successful') {
-        setStoredUsername(username);
-        onLogin(username);
+      if (response.status === 200) {
+        setContextUsername(username);
+        localStorage.setItem('username', username);
         navigate('/');
       } else {
-        setError(response.message);
+        setError(response.error || 'Failed to log in. Please try again.');
       }
     } catch (error) {
-      setError('Failed to log in. Please try again.');
+      console.error('Login error:', error);
+      setError('An error occurred. Please try again.');
     }
   };
 
   return (
-    <div className="container-sm my-5">
-      <div className="col-12 col-5">
-        <div className="header row">
-          <div className="col-12">
-            <h1>21-day</h1>
-            <h1>Date Challenge</h1>
-          </div>
+    <div className="container mt-5">
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">Username</label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
-        <hr />
-        <div className="row">
-          <div className="col-12 col-md-7 mb-3">
-            <h3>Login</h3>
-            <div className="input-group my-3">
-              <span className="input-group-text" id="account">Account</span>
-              <input
-                type="text"
-                className="form-control"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="input-group mb-3">
-              <span className="input-group-text" id="password">Password</span>
-              <input
-                type="password"
-                className="form-control"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            {error && <div className="text-danger mb-3">{error}</div>}
-            <div className="d-grid">
-              <button onClick={handleLogin} className="btn btn-outline-secondary">
-                Login
-              </button>
-            </div>
-          </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
-        <Footer />
-      </div>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <button type="submit" className="btn btn-primary">Login</button>
+      </form>
     </div>
   );
 };

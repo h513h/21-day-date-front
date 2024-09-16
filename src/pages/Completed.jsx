@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import CompletedModal from '../components/CompletedModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { getCompletedTasks } from '../api';
 import { Modal } from 'bootstrap';
+import { useAppContext } from '../AppContext';
 
-const Completed = ({ username }) => {
+const Completed = () => {
   const [completedTasks, setCompletedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const { username, isLoading, setIsLoading } = useAppContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTasks = async () => {
       if (!username) {
-        console.error('Username is not provided');
+        navigate('/login');
         return;
       }
+      setIsLoading(true);
       try {
         const tasks = await getCompletedTasks(username);
         setCompletedTasks(tasks);
       } catch (error) {
         console.error('Error fetching completed tasks:', error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchTasks();
-  }, [username]);
+  }, [username, setIsLoading, navigate]);
 
   const handleTaskClick = (task) => {
     setSelectedTask(task);
@@ -35,6 +43,10 @@ const Completed = ({ username }) => {
       modal.show();
     }
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!username) {
     return <div>Error: Username is not provided</div>;
@@ -55,10 +67,10 @@ const Completed = ({ username }) => {
                 key={index} 
                 className="col-6 col-md-3" 
                 onClick={() => handleTaskClick(task)}
-                 role="button"
+                role="button"
               >
                 <img className='w-100' src={task.photo} alt={task.title} />
-                <p class="mt-2">{task.date}</p>
+                <p className="mt-2">{task.date}</p>
               </div>
             ))}
           </div>

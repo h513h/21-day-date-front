@@ -6,10 +6,9 @@ import { useAppContext } from '../AppContext';
 const colors = ['#cb93bf', '#c293a3', '#ad8478', '#fad1ad', '#e2a772', '#eadcce', '#e49793', '#f6aaa6', '#eec7de'];
 
 const HeartIcon = ({ item, username }) => {
-  
   const navigate = useNavigate();
   const [color, setColor] = useState('');
-  const { hasProcessingTask, updateProcessingTaskStatus } = useAppContext();
+  const { hasProcessingTask, updateProcessingTaskStatus, setIsLoading } = useAppContext();
 
   useEffect(() => {
     const getRandomColor = () => {
@@ -34,6 +33,7 @@ const HeartIcon = ({ item, username }) => {
     }
 
     if (item.done === 'yet' || item.done === null) {
+      setIsLoading(true);
       try {
         await updateTodoItem(username, item.id, 'processing');
         const updatedList = await getTodoList(username);
@@ -41,6 +41,8 @@ const HeartIcon = ({ item, username }) => {
         navigate('/processing', { state: { item } });
       } catch (error) {
         console.error('Error updating item status:', error);
+      } finally {
+        setIsLoading(false);
       }
     }
   };

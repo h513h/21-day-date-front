@@ -4,38 +4,28 @@ import { useAppContext } from '../AppContext';
 import { Modal } from 'bootstrap';
 
 const AlreadyFinishedModal = ({ username, itemId }) => {
-  const { updateProcessingTaskStatus, todoList } = useAppContext();
+  const { updateProcessingTaskStatus, todoList, setIsLoading } = useAppContext();
 
   const handleTryOtherOne = async () => {
-    console.log('handleTryOtherOne clicked. Username:', username, 'ItemId:', itemId);
+    setIsLoading(true);
     try {
-      // 1. 獲取當前 processing 任務
       const currentTask = todoList.find(item => item.done === 'processing');
-      console.log('Current task:', currentTask);
-
       if (!currentTask) {
         console.error('No processing task found');
         return;
       }
-      // replace current task
-      await editTodoItem(username, currentTask.id)
-
-      // 2. 更新任務狀態至 "processing"
+      await editTodoItem(username, currentTask.id);
       await updateTodoItem(username, currentTask.id, 'processing');
-
-      // 3. 取得最新的任務清單
       const updatedList = await getTodoList(username);
-
-      // 4. 更新應用程序上下文中的處理任務狀態
       updateProcessingTaskStatus(updatedList);
-
     } catch (error) {
       console.error('Error in handleTryOtherOne:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleTakeRest = () => {
-    // 打開 FinishNowModal
     const finishNowModal = new Modal(document.getElementById('now'));
     finishNowModal.show();
   };
@@ -50,10 +40,10 @@ const AlreadyFinishedModal = ({ username, itemId }) => {
           </div>
           <div className="modal-body p-4">
             <div className="d-flex justify-content-around">
-              <button type="button" className="btn btn-success px-4"  data-bs-dismiss="modal" aria-label="Close" onClick={handleTakeRest}>
+              <button type="button" className="btn btn-success px-4" data-bs-dismiss="modal" aria-label="Close" onClick={handleTakeRest}>
                 Take a rest this time
               </button>
-              <button type="button" className="btn btn-warning px-4"  data-bs-dismiss="modal" aria-label="Close" onClick={handleTryOtherOne}>Try other one!</button>
+              <button type="button" className="btn btn-warning px-4" data-bs-dismiss="modal" aria-label="Close" onClick={handleTryOtherOne}>Try other one!</button>
             </div>
           </div>
         </div>

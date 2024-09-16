@@ -4,12 +4,13 @@ import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import HeartIcon from '../components/HeartIcon';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { getTodoList, generateTodoList } from '../api';
 import { useAppContext } from '../AppContext';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { username, todoList, setTodoList, updateProcessingTaskStatus, hasProcessingTask } = useAppContext();
+  const { username, todoList, setTodoList, updateProcessingTaskStatus, hasProcessingTask, isLoading, setIsLoading } = useAppContext();
 
   useEffect(() => {
     const fetchTodoList = async () => {
@@ -18,6 +19,7 @@ const Home = () => {
         return;
       }
 
+      setIsLoading(true);
       try {
         let list = await getTodoList(username);
         
@@ -35,11 +37,17 @@ const Home = () => {
       } catch (error) {
         console.error('Error fetching todo list:', error);
         navigate('/login');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchTodoList();
-  }, [username, navigate, setTodoList, updateProcessingTaskStatus]);
+  }, [username, navigate, setTodoList, updateProcessingTaskStatus, setIsLoading]);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!username || todoList.length === 0) {
     return null;

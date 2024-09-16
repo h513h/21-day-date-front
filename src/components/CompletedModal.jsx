@@ -32,7 +32,6 @@ const CompletedModal = ({ task }) => {
                 <img src={task.photo} alt={task.title} className="img-fluid" />
               </div>
             </div>
-
             <p className="text-break mt-3">{task.comment1}</p>
             <hr />
             <p className="text-break">{task.comment2}</p>

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 import { getUsername } from './utils/LocalStorageUtils';
 import { generateTodoList, getTodoList, getCompletedTasks } from './api';
+import LoadingSpinner from './components/LoadingSpinner';
 
 const AppContext = createContext();
 
@@ -13,40 +14,26 @@ export const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const updateProcessingTaskStatus = useCallback((updatedList) => {
-    console.log('Updating processing task status with list:', updatedList);
     setTodoList(updatedList);
     const hasProcessing = updatedList.some(item => item.done === 'processing');
-    console.log('Has processing task:', hasProcessing);
     setHasProcessingTask(hasProcessing);
   }, []);
 
   const updateCompletedTasks = useCallback(async () => {
     if (username) {
       setIsLoading(true);
-      console.log('Updating completed tasks for user:', username);
       try {
         const tasks = await getCompletedTasks(username);
-        console.log('Fetched completed tasks:', tasks);
         const completedCount = tasks.length;
-        console.log('Completed tasks count:', completedCount);
         const newWeek = Math.floor(completedCount / 7) + 1;
-        console.log('Calculated new week:', newWeek);
 
-        await new Promise(resolve => {
-          setCompletedTasks(tasks);
-          setCurrentWeek(newWeek);
-          resolve();
-        });
+        setCompletedTasks(tasks);
+        setCurrentWeek(newWeek);
 
         if (completedCount > 0 && completedCount % 7 === 0) {
-          console.log('Generating new todo list');
           await generateTodoList(username);
           const newTodoList = await getTodoList(username);
-          console.log('New todo list:', newTodoList);
-          await new Promise(resolve => {
-            updateProcessingTaskStatus(newTodoList);
-            resolve();
-          });
+          updateProcessingTaskStatus(newTodoList);
         }
       } catch (error) {
         console.error('Error in updateCompletedTasks:', error);
@@ -56,14 +43,33 @@ export const AppProvider = ({ children }) => {
     }
   }, [username, updateProcessingTaskStatus]);
 
-  useEffect(() => {
-    console.log('AppContext useEffect triggered');
-    updateCompletedTasks();
-  }, [updateCompletedTasks]);
+  const fetchTodoList = useCallback(async () => {
+    if (username) {
+      setIsLoading(true);
+      try {
+        let list = await getTodoList(username);
+        
+        if (list.length === 0) {
+          await generateTodoList(username);
+          list = await getTodoList(username);
+        }
+
+        setTodoList(list);
+        updateProcessingTaskStatus(list);
+      } catch (error) {
+        console.error('Error fetching todo list:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [username, updateProcessingTaskStatus]);
 
   useEffect(() => {
-    console.log('Current week updated:', currentWeek);
-  }, [currentWeek]);
+    if (username) {
+      fetchTodoList();
+      updateCompletedTasks();
+    }
+  }, [username, fetchTodoList, updateCompletedTasks]);
 
   return (
     <AppContext.Provider value={{
@@ -76,8 +82,11 @@ export const AppProvider = ({ children }) => {
       currentWeek,
       updateProcessingTaskStatus,
       hasProcessingTask,
-      isLoading
+      isLoading,
+      setIsLoading,
+      fetchTodoList
     }}>
+      {isLoading && <LoadingSpinner />}
       {children}
     </AppContext.Provider>
   );

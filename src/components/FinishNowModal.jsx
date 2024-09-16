@@ -5,22 +5,23 @@ import { useAppContext } from '../AppContext';
 
 const FinishNowModal = () => {
   const navigate = useNavigate();
-  const { username, todoList, updateProcessingTaskStatus, completedTasksCount, updateCompletedTasksCount } = useAppContext();
+  const { username, todoList, updateProcessingTaskStatus, completedTasksCount, updateCompletedTasksCount, setIsLoading } = useAppContext();
   const [selectedImage, setSelectedImage] = useState('');
   const [comment1, setComment1] = useState('');
   const [comment2, setComment2] = useState('');
 
   const handleFinish = async () => {
-    const currentDate = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    setIsLoading(true);
+    const currentDate = new Date().toISOString().split('T')[0];
     const processingTask = todoList.find(task => task.done === 'processing');
 
     if (!processingTask) {
       console.error('No processing task found');
+      setIsLoading(false);
       return;
     }
 
     try {
-      // 1. Add completed task
       await addCompletedTask(username, {
         photo: selectedImage,
         comment1,
@@ -29,21 +30,15 @@ const FinishNowModal = () => {
         date: currentDate
       });
 
-      // 2. Update todo item to 'done'
       await updateTodoItem(username, processingTask.id, 'done');
-
-      // 3. Get updated todo list
       const updatedList = await getTodoList(username);
       updateProcessingTaskStatus(updatedList);
-
-      // 4. Update completed tasks count
       updateCompletedTasksCount(completedTasksCount + 1);
-
-      // 5. Navigate to completed page
       navigate('/completed');
     } catch (error) {
       console.error('Error in finishing task:', error);
-      // Handle error (e.g., show error message to user)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,7 +54,6 @@ const FinishNowModal = () => {
             <div className="mb-3">
               <div className="row align-items-end">
                 <p>How's your feelings?</p>
-                {/* Image options remain the same, just add onChange handler */}
                 <div className="col-6 option py-3">
                   <label className="d-flex justify-content-center">
                     <input 
@@ -81,7 +75,8 @@ const FinishNowModal = () => {
                     />
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMIapwP_zvVLJwATjH-d8cga_jVPuygd3O7Bgtb5ZMs9_1HEzoSziyRvNThXLD3EUKXGH5Tz3OBeMBxS-tpoUplmjNwNVHIb3x5TBZ3-a69GWiIPXFPEdqvNME4l8SMMEZ42MuE05fVZo/s400/couple_okoru_man.png" alt="Happy lady"/>
                   </label>
-                </div><div className="col-6 option py-3">
+                </div>
+                <div className="col-6 option py-3">
                   <label className="d-flex justify-content-center">
                     <input 
                       type="radio" 
@@ -91,7 +86,8 @@ const FinishNowModal = () => {
                     />
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi20eSwmtjX6ZaBNGUVGR_F6Srox8-cmHH7sCyChVI4-Ctelj-1WbU9MF-5JJx94qpipZIyzDqGGEq_LxXPotlaMOe9epBtMdGsgMLdluopHDyIu-jSA-p7kaC7oBb0M0dHjzd8fH2yUuo/s400/couple_okoru_woman.png" alt="Happy man"/>
                   </label>
-                </div><div className="col-6 option py-3">
+                </div>
+                <div className="col-6 option py-3">
                   <label className="d-flex justify-content-center">
                     <input 
                       type="radio" 
@@ -127,7 +123,7 @@ const FinishNowModal = () => {
             </div>
             <div className="d-flex justify-content-end">
               <button type="button" className="btn btn-warning me-3" data-bs-dismiss="modal">Return</button>
-              <button type="button" className="btn btn-success"  data-bs-dismiss="modal" onClick={handleFinish}>Finished</button>
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleFinish}>Finished</button>
             </div>
           </div>
         </div>

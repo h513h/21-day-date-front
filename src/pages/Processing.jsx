@@ -5,13 +5,14 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import FinishNowModal from '../components/FinishNowModal';
 import AlreadyFinishedModal from '../components/AlreadyFinishedModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 import { useAppContext } from '../AppContext';
+import { Modal } from 'bootstrap';
 
 const Processing = () => {
   const navigate = useNavigate();
-  const { username, todoList } = useAppContext();
+  const { username, todoList, isLoading } = useAppContext();
   
-  // 從 todoList 中找出 "done":"processing" 的項目
   const processingItem = todoList.find(item => item.done === 'processing');
 
   useEffect(() => {
@@ -21,6 +22,17 @@ const Processing = () => {
       navigate('/');
     }
   }, [username, processingItem, navigate]);
+
+  useEffect(() => {
+    const finishNowModal = document.getElementById('now');
+    if (finishNowModal) {
+      new Modal(finishNowModal);
+    }
+  }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   if (!username || !processingItem) {
     return null;
