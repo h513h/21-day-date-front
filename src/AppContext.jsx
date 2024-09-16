@@ -12,10 +12,6 @@ export const AppProvider = ({ children }) => {
   const [hasProcessingTask, setHasProcessingTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const setGlobalLoading = (loading) => {
-    setIsLoading(loading);
-  };
-
   const updateProcessingTaskStatus = useCallback((updatedList) => {
     console.log('Updating processing task status with list:', updatedList);
     setTodoList(updatedList);
@@ -31,19 +27,26 @@ export const AppProvider = ({ children }) => {
       try {
         const tasks = await getCompletedTasks(username);
         console.log('Fetched completed tasks:', tasks);
-        setCompletedTasks(tasks);
         const completedCount = tasks.length;
         console.log('Completed tasks count:', completedCount);
         const newWeek = Math.floor(completedCount / 7) + 1;
         console.log('Calculated new week:', newWeek);
-        setCurrentWeek(newWeek);
+
+        await new Promise(resolve => {
+          setCompletedTasks(tasks);
+          setCurrentWeek(newWeek);
+          resolve();
+        });
 
         if (completedCount > 0 && completedCount % 7 === 0) {
           console.log('Generating new todo list');
           await generateTodoList(username);
           const newTodoList = await getTodoList(username);
           console.log('New todo list:', newTodoList);
-          updateProcessingTaskStatus(newTodoList);
+          await new Promise(resolve => {
+            updateProcessingTaskStatus(newTodoList);
+            resolve();
+          });
         }
       } catch (error) {
         console.error('Error in updateCompletedTasks:', error);
@@ -62,21 +65,6 @@ export const AppProvider = ({ children }) => {
     console.log('Current week updated:', currentWeek);
   }, [currentWeek]);
 
-  const refreshTodoList = useCallback(async () => {
-    if (username) {
-      setIsLoading(true);
-      try {
-        const list = await getTodoList(username);
-        setTodoList(list);
-        updateProcessingTaskStatus(list);
-      } catch (error) {
-        console.error('Error refreshing todo list:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-  }, [username, updateProcessingTaskStatus]);
-
   return (
     <AppContext.Provider value={{
       username,
@@ -88,9 +76,7 @@ export const AppProvider = ({ children }) => {
       currentWeek,
       updateProcessingTaskStatus,
       hasProcessingTask,
-      isLoading,
-      setGlobalLoading,
-      refreshTodoList
+      isLoading
     }}>
       {children}
     </AppContext.Provider>
