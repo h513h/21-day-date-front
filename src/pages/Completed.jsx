@@ -60,7 +60,7 @@ const Completed = () => {
         {completedTasks.length === 0 ? (
           <h2>Let's do a date, leave a sweet memory with your partner!</h2>
         ) : (
-          <div className="row mt-3 align-items-end flex-row-reverse justify-content-end">
+          <div className="row mt-3 align-items-end flex-wrap-reverse">
             <p>You two lovely souls have completed {completedTasks.length} dates together!</p>
             {completedTasks.map((task, index) => (
               <div 

@@ -1,3 +1,4 @@
+// src/components/FinishNowModal.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addCompletedTask, updateTodoItem, getTodoList } from '../api';
@@ -29,11 +30,13 @@ const FinishNowModal = () => {
         title: processingTask.content.title,
         date: currentDate
       });
-
+    
       await updateTodoItem(username, processingTask.id, 'done');
       const updatedList = await getTodoList(username);
       updateProcessingTaskStatus(updatedList);
       updateCompletedTasksCount(completedTasksCount + 1);
+
+      console.log('Navigating to /completed');  // 應該會被執行
       navigate('/completed');
     } catch (error) {
       console.error('Error in finishing task:', error);
