@@ -11,7 +11,10 @@ export const AppProvider = ({ children }) => {
   const [currentWeek, setCurrentWeek] = useState(1);
   const [hasProcessingTask, setHasProcessingTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalLoading, setIsModalLoading] = useState(false);  // 新增
+
+  const setGlobalLoading = (loading) => {
+    setIsLoading(loading);
+  };
 
   const updateProcessingTaskStatus = useCallback((updatedList) => {
     console.log('Updating processing task status with list:', updatedList);
@@ -21,32 +24,26 @@ export const AppProvider = ({ children }) => {
     setHasProcessingTask(hasProcessing);
   }, []);
 
-  const generateNewTodoList = useCallback(async () => {  // 新增
-    if (username) {
-      try {
-        await generateTodoList(username);
-        const newTodoList = await getTodoList(username);
-        updateProcessingTaskStatus(newTodoList);
-      } catch (error) {
-        console.error('Error generating new todo list:', error);
-      }
-    }
-  }, [username, updateProcessingTaskStatus]);
-
-  const updateCompletedTasks = useCallback(async () => {  // 修改
+  const updateCompletedTasks = useCallback(async () => {
     if (username) {
       setIsLoading(true);
+      console.log('Updating completed tasks for user:', username);
       try {
         const tasks = await getCompletedTasks(username);
-        const completedCount = tasks.length;
-        const newWeek = Math.floor(completedCount / 7) + 1;
-
+        console.log('Fetched completed tasks:', tasks);
         setCompletedTasks(tasks);
+        const completedCount = tasks.length;
+        console.log('Completed tasks count:', completedCount);
+        const newWeek = Math.floor(completedCount / 7) + 1;
+        console.log('Calculated new week:', newWeek);
         setCurrentWeek(newWeek);
 
         if (completedCount > 0 && completedCount % 7 === 0) {
-          console.log('Generating new todo list immediately');
-          await generateNewTodoList();
+          console.log('Generating new todo list');
+          await generateTodoList(username);
+          const newTodoList = await getTodoList(username);
+          console.log('New todo list:', newTodoList);
+          updateProcessingTaskStatus(newTodoList);
         }
       } catch (error) {
         console.error('Error in updateCompletedTasks:', error);
@@ -54,7 +51,7 @@ export const AppProvider = ({ children }) => {
         setIsLoading(false);
       }
     }
-  }, [username, generateNewTodoList]);
+  }, [username, updateProcessingTaskStatus]);
 
   useEffect(() => {
     console.log('AppContext useEffect triggered');
@@ -64,6 +61,21 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     console.log('Current week updated:', currentWeek);
   }, [currentWeek]);
+
+  const refreshTodoList = useCallback(async () => {
+    if (username) {
+      setIsLoading(true);
+      try {
+        const list = await getTodoList(username);
+        setTodoList(list);
+        updateProcessingTaskStatus(list);
+      } catch (error) {
+        console.error('Error refreshing todo list:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [username, updateProcessingTaskStatus]);
 
   return (
     <AppContext.Provider value={{
@@ -77,9 +89,8 @@ export const AppProvider = ({ children }) => {
       updateProcessingTaskStatus,
       hasProcessingTask,
       isLoading,
-      isModalLoading,  // 新增
-      setIsModalLoading,  // 新增
-      generateNewTodoList  // 新增
+      setGlobalLoading,
+      refreshTodoList
     }}>
       {children}
     </AppContext.Provider>
