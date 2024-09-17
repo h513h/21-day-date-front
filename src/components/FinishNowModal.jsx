@@ -1,12 +1,12 @@
-// src/components/FinishNowModal.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addCompletedTask, updateTodoItem, getTodoList } from '../api';
+import { addCompletedTask, updateTodoItem } from '../api';
 import { useAppContext } from '../AppContext';
+import { Modal } from 'bootstrap';
 
 const FinishNowModal = () => {
   const navigate = useNavigate();
-  const { username, todoList, updateProcessingTaskStatus, completedTasksCount, updateCompletedTasksCount, setIsLoading } = useAppContext();
+  const { username, todoList, updateAfterTaskCompletion, setIsLoading } = useAppContext();
   const [selectedImage, setSelectedImage] = useState('');
   const [comment1, setComment1] = useState('');
   const [comment2, setComment2] = useState('');
@@ -15,13 +15,11 @@ const FinishNowModal = () => {
     setIsLoading(true);
     const currentDate = new Date().toISOString().split('T')[0];
     const processingTask = todoList.find(task => task.done === 'processing');
-
     if (!processingTask) {
       console.error('No processing task found');
       setIsLoading(false);
       return;
     }
-
     try {
       await addCompletedTask(username, {
         photo: selectedImage,
@@ -30,13 +28,17 @@ const FinishNowModal = () => {
         title: processingTask.content.title,
         date: currentDate
       });
-    
       await updateTodoItem(username, processingTask.id, 'done');
-      const updatedList = await getTodoList(username);
-      updateProcessingTaskStatus(updatedList);
-      updateCompletedTasksCount(completedTasksCount + 1);
+      await updateAfterTaskCompletion();
+      
+      // Close the modal
+      const modalElement = document.getElementById('now');
+      const modal = Modal.getInstance(modalElement);
+      if (modal) {
+        modal.hide();
+      }
 
-      console.log('Navigating to /completed');  // 應該會被執行
+      // Navigate to the completed page
       navigate('/completed');
     } catch (error) {
       console.error('Error in finishing task:', error);

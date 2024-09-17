@@ -60,19 +60,21 @@ const Completed = () => {
         {completedTasks.length === 0 ? (
           <h2>Let's do a date, leave a sweet memory with your partner!</h2>
         ) : (
-          <div className="row mt-3 align-items-end flex-wrap-reverse">
+          <div>
             <p>You two lovely souls have completed {completedTasks.length} dates together!</p>
-            {completedTasks.map((task, index) => (
-              <div 
-                key={index} 
-                className="col-6 col-md-3" 
-                onClick={() => handleTaskClick(task)}
-                role="button"
-              >
-                <img className='w-100' src={task.photo} alt={task.title} />
-                <p className="mt-2">{task.date}</p>
-              </div>
-            ))}
+            <div className="row mt-3 align-items-end flex-wrap-reverse justify-content-center">
+              {completedTasks.map((task, index) => (
+                <div 
+                  key={index} 
+                  className="col-6 col-md-3" 
+                  onClick={() => handleTaskClick(task)}
+                  role="button"
+                >
+                  <img className='w-100' src={task.photo} alt={task.title} />
+                  <p className="mt-2">{task.date}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>

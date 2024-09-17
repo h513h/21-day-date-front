@@ -19,8 +19,7 @@ export const AppProvider = ({ children }) => {
     setHasProcessingTask(hasProcessing);
   }, []);
 
-  // Function to update completed tasks
-  const updateCompletedTasks = useCallback(async () => {
+  const updateAfterTaskCompletion = useCallback(async () => {
     if (username) {
       setIsLoading(true);
       try {
@@ -30,15 +29,21 @@ export const AppProvider = ({ children }) => {
 
         setCompletedTasks(tasks);
         setCurrentWeek(newWeek);
+
+        if (completedCount % 7 === 0) {
+          await generateTodoList(username);
+          const newTodoList = await getTodoList(username);
+          setTodoList(newTodoList);
+          updateProcessingTaskStatus(newTodoList);
+        }
       } catch (error) {
-        console.error('Error in updateCompletedTasks:', error);
+        console.error('Error in updateAfterTaskCompletion:', error);
       } finally {
         setIsLoading(false);
       }
     }
-  }, [username]);
+  }, [username, updateProcessingTaskStatus]);
 
-  // Function to fetch the to-do list
   const fetchTodoList = useCallback(async () => {
     if (username) {
       setIsLoading(true);
@@ -60,37 +65,12 @@ export const AppProvider = ({ children }) => {
     }
   }, [username, updateProcessingTaskStatus]);
 
-  // Effect to fetch todo list and completed tasks when username changes
   useEffect(() => {
     if (username) {
       fetchTodoList();
-      updateCompletedTasks();
+      updateAfterTaskCompletion();
     }
-  }, [username, fetchTodoList, updateCompletedTasks]);
-
-  // Effect to generate new todo list when completed tasks reach a multiple of 7
-  useEffect(() => {
-    const completedCount = completedTasks.length;
-
-    if (completedCount > 0 && completedCount % 7 === 0) {
-      const newWeek = Math.floor(completedCount / 7) + 1;
-      setCurrentWeek(newWeek);
-
-      const generateNewTodoList = async () => {
-        try {
-          console.log('Generating new todo list as completed tasks reached a multiple of 7...');
-          await generateTodoList(username);
-          const newTodoList = await getTodoList(username);
-          setTodoList(newTodoList);
-          updateProcessingTaskStatus(newTodoList);
-        } catch (error) {
-          console.error('Error generating new todo list:', error);
-        }
-      };
-
-      generateNewTodoList();
-    }
-  }, [completedTasks, username, updateProcessingTaskStatus]);
+  }, [username, fetchTodoList, updateAfterTaskCompletion]);
 
   return (
     <AppContext.Provider value={{
@@ -99,13 +79,13 @@ export const AppProvider = ({ children }) => {
       todoList,
       setTodoList,
       completedTasks,
-      updateCompletedTasks,
       currentWeek,
       updateProcessingTaskStatus,
       hasProcessingTask,
       isLoading,
       setIsLoading,
-      fetchTodoList
+      fetchTodoList,
+      updateAfterTaskCompletion
     }}>
       {isLoading && <LoadingSpinner />}
       {children}
