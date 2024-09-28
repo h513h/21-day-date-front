@@ -35,15 +35,15 @@ const AlreadyFinishedModal = ({ username, itemId }) => {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header border-0 ps-5">
-            <h1 className="modal-title fs-5 text-center" id="alreadyLabel">I finished before opening the app.</h1>
+            <h1 className="modal-title fs-5 text-center" id="alreadyLabel">早就完成了 / もう完成した / I finished before opening the app.</h1>
             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div className="modal-body p-4">
             <div className="d-flex justify-content-around">
-              <button type="button" className="btn btn-success px-4" data-bs-dismiss="modal" aria-label="Close" onClick={handleTakeRest}>
-                Take a rest this time
+              <button type="button" className="btn btn-success px-4 me-2" data-bs-dismiss="modal" aria-label="Close" onClick={handleTakeRest}>
+                休息一次 / 今回は休憩 / Take a rest this time
               </button>
-              <button type="button" className="btn btn-warning px-4" data-bs-dismiss="modal" aria-label="Close" onClick={handleTryOtherOne}>Try other one!</button>
+              <button type="button" className="btn btn-warning px-4" data-bs-dismiss="modal" aria-label="Close" onClick={handleTryOtherOne}>試試看其他的 / 他のしてみる / Try other one!</button>
             </div>
           </div>
         </div>

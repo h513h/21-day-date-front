@@ -59,6 +59,8 @@ const Home = () => {
       <Navigation />
       {hasProcessingTask && (
         <div className="alert alert-info m-0 mt-3" role="alert">
+          正好在挑戰的過程中！完成後，隨時可以去嘗試下一個挑戰。你們表現得非常出色！<br/>
+          現在、挑戦中ですね！終わったら、ぜひ新しいチャレンジにも挑戦してみてください。絶好調ですよ！<br/>
           You're in the middle of a challenge right now! Once you've completed it, feel free to explore and take on another one. You're doing great!
         </div>
       )}

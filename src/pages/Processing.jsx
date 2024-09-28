@@ -63,14 +63,14 @@ const Processing = () => {
               data-bs-toggle="modal"
               data-bs-target="#already"
             >
-              Finish before opening the app
+              早就完成了 / もう完成した / Finish before opening the app
             </button>
             <button
               className="btn btn-secondary rounded-2"
               data-bs-toggle="modal"
               data-bs-target="#now"
             >
-              Finish NOW
+              做完了 / 完成 / Finish NOW
             </button>
           </div>
           <ol>

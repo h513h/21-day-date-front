@@ -12,7 +12,7 @@ const Navigation = () => {
 
   const handleNavigation = (path) => {
     if (path === '/processing' && !hasProcessingTask) {
-      alert("You're not working on any challenge at the moment! Pick one below and create some sweet memories with your partner. Have fun together!");
+      alert(`${`現在沒有正在進行的挑戰！從首頁選一個，和你的伴侶一起創造甜蜜的回憶吧。好好享受彼此的時光！`}\n${`今、どのチャレンジにも取り組んでいません！ホームから一つ選んで、パートナーと一緒に素敵な思い出を作りましょう。楽しんでくださいね！`}\n${`You're not working on any challenge at the moment! Pick one below and create some sweet memories with your partner. Have fun together!`}`);
     } else {
       navigate(path);
     }
@@ -26,7 +26,7 @@ const Navigation = () => {
           onClick={() => handleNavigation('/')}
           type="button"
         >
-          Home
+         首頁 / ホーム / Home
         </button>
       </li>
       <li className="col-4 p-2" onClick={() => handleNavigation('/processing')}>
@@ -35,7 +35,7 @@ const Navigation = () => {
           disabled={!hasProcessingTask}
           type="button"
         >
-          In progress
+          進行中 / In progress
         </button>
       </li>
       <li className="col-4 p-2">
@@ -44,7 +44,7 @@ const Navigation = () => {
           onClick={() => handleNavigation('/completed')}
           type="button"
         >
-          Completed
+          完成 / Completed
         </button>
       </li>
     </ul>

@@ -61,7 +61,9 @@ const Completed = () => {
           <h2>Let's do a date, leave a sweet memory with your partner!</h2>
         ) : (
           <div>
-            <p>You two lovely souls have completed {completedTasks.length} dates together!</p>
+            <p class="mb-2">你們兩位了不起的人一起完成了 {completedTasks.length} 次約會！</p>
+            <p class="mb-2">二人の素晴らしいカップルは一緒に {completedTasks.length} 回のデートを完了しました！</p>
+            <p>You two amazing people have completed {completedTasks.length} dates together!</p>
             <div className="row mt-3 align-items-end flex-wrap-reverse justify-content-center">
               {completedTasks.map((task, index) => (
                 <div 

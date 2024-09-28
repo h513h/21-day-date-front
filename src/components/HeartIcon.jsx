@@ -49,6 +49,7 @@ const HeartIcon = ({ item, username }) => {
 
   return (
     <li className="col-4 py-4">
+      <div className="estimate text-center">約 {item.content.time} 分鐘 / 約 {item.content.time} 分</div>
       <div className="estimate text-center mb-3">Around {item.content.time} mins</div>
       <div 
         className={`heart-icon d-flex justify-content-center ${item.done === 'done' ? 'completed' : ''} ${hasProcessingTask && item.done !== 'processing' ? 'disabled' : ''}`}
