@@ -68,7 +68,9 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                     />
                     雙方都很開心 /<br/> 二人とも楽しかった /<br/> Both of us are happy.
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6iDq1WKRKqZBVPOdzkIT6wvsfxXBchnrhUZfzmeR3tt8WMU6ywXaYWC1JwVX4SsLQWK5fBB7D70Qs3GoqzMl5GUCxuuPvLVPIZCn6g45nlskrpB0QXd8ng2T1jDVdpgmp99_BSXtLLak/s400/date_couple.png" alt="Happy couple"/>
+                    <div class="ratio ratio-1x1 mt-2">
+                      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6iDq1WKRKqZBVPOdzkIT6wvsfxXBchnrhUZfzmeR3tt8WMU6ywXaYWC1JwVX4SsLQWK5fBB7D70Qs3GoqzMl5GUCxuuPvLVPIZCn6g45nlskrpB0QXd8ng2T1jDVdpgmp99_BSXtLLak/s400/date_couple.png" alt="Happy couple"/>
+                    </div>
                   </label>
                 </div>
                 <div className="col-6 py-3">
@@ -80,7 +82,9 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                     />
                     男生不開心 / <br/>彼氏は楽しくなかった / <br/>The male partner is not happy.
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMIapwP_zvVLJwATjH-d8cga_jVPuygd3O7Bgtb5ZMs9_1HEzoSziyRvNThXLD3EUKXGH5Tz3OBeMBxS-tpoUplmjNwNVHIb3x5TBZ3-a69GWiIPXFPEdqvNME4l8SMMEZ42MuE05fVZo/s400/couple_okoru_man.png" alt="Happy lady"/>
+                    <div class="ratio ratio-1x1 mt-2">
+                      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMIapwP_zvVLJwATjH-d8cga_jVPuygd3O7Bgtb5ZMs9_1HEzoSziyRvNThXLD3EUKXGH5Tz3OBeMBxS-tpoUplmjNwNVHIb3x5TBZ3-a69GWiIPXFPEdqvNME4l8SMMEZ42MuE05fVZo/s400/couple_okoru_man.png" alt="Happy lady"/>
+                    </div>
                   </label>
                 </div>
                 <div className="col-6 py-3">
@@ -92,7 +96,9 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                     />
                     女生不開心 / <br/>彼女は楽しくなかった / <br/>The female partner is not happy.
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi20eSwmtjX6ZaBNGUVGR_F6Srox8-cmHH7sCyChVI4-Ctelj-1WbU9MF-5JJx94qpipZIyzDqGGEq_LxXPotlaMOe9epBtMdGsgMLdluopHDyIu-jSA-p7kaC7oBb0M0dHjzd8fH2yUuo/s400/couple_okoru_woman.png" alt="Happy man"/>
+                    <div class="ratio ratio-1x1 mt-2">
+                      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi20eSwmtjX6ZaBNGUVGR_F6Srox8-cmHH7sCyChVI4-Ctelj-1WbU9MF-5JJx94qpipZIyzDqGGEq_LxXPotlaMOe9epBtMdGsgMLdluopHDyIu-jSA-p7kaC7oBb0M0dHjzd8fH2yUuo/s400/couple_okoru_woman.png" alt="Happy man"/>
+                    </div>
                   </label>
                 </div>
                 <div className="col-6 py-3">
@@ -104,7 +110,9 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                     />
                     雙方都不開心 / <br/>二人とも楽しくなかった / <br/>Both of us are not happy.
-                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYEYEmYCx1qosBWoFBbqPuQZ5-IHZuheWT3vyNHM5mr7P9XsLq6EKSTfbzsM9alX5wew3wBNqaQP-KVhvMaXgAfp7eBLmloDQvmb8E2hh5X1gasMmZuj-5-iS0XYdAorEWlbyH548CaFk/s400/kenka_couple.png" alt="angry couple"/>
+                    <div class="ratio ratio-1x1 mt-2">
+                      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYEYEmYCx1qosBWoFBbqPuQZ5-IHZuheWT3vyNHM5mr7P9XsLq6EKSTfbzsM9alX5wew3wBNqaQP-KVhvMaXgAfp7eBLmloDQvmb8E2hh5X1gasMmZuj-5-iS0XYdAorEWlbyH548CaFk/s400/kenka_couple.png" alt="angry couple"/>
+                    </div>
                   </label>
                 </div>
               </div>

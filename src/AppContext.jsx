@@ -35,6 +35,8 @@ export const AppProvider = ({ children }) => {
           const newTodoList = await getTodoList(username);
           setTodoList(newTodoList);
           updateProcessingTaskStatus(newTodoList);
+        } else {
+          updateProcessingTaskStatus([]); // 確保沒有任務時更新處理中的狀態
         }
       } catch (error) {
         console.error('Error in updateAfterTaskCompletion:', error);

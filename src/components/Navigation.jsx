@@ -44,7 +44,7 @@ const Navigation = () => {
           onClick={() => handleNavigation('/completed')}
           type="button"
         >
-          完成 / Completed
+          已完成 / 完了 / Completed
         </button>
       </li>
     </ul>

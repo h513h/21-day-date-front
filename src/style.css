@@ -10,16 +10,15 @@ body {
   appearance: none;
 }
 
-.option img {
+.option div {
   width: 150px;
-  height: 150px;
   object-fit: cover;
   border: 2px solid transparent;
   opacity: 0.6;
   transition: border-color 0.5s ease, opacity 0.5s ease;  /* 加入漸變效果 */
 }
 
-.option input[type="radio"]:checked ~ img {
+.option input[type="radio"]:checked ~ div {
   border-color: #ff91af;  /* 選中的邊框顏色 */
   border-width: 2px;
   opacity: 1;  /* 選中時完全顯示 */

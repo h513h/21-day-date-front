@@ -118,7 +118,9 @@ const Completed = () => {
                   onClick={() => handleTaskClick(task)}
                   role="button"
                 >
-                  <img className='w-100' src={task.photo} alt={task.title} />
+                  <div class="ratio ratio-1x1">
+                    <img className='w-100' src={task.photo} alt={task.title} />
+                  </div>
                   <p className="mt-2">{task.date}</p>
                 </div>
               ))}
