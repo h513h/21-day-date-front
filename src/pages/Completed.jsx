@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSound from 'use-sound';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -14,6 +15,15 @@ const Completed = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const { username, isLoading, setIsLoading } = useAppContext();
   const navigate = useNavigate();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [volume, setVolume] = useState(0);
+
+  const [play, { pause, stop, sound }] = useSound('/audio/completed_audio.mp3', {
+    volume: volume,
+    onend: () => {
+      setIsPlaying(false);
+    },
+  });
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -34,6 +44,37 @@ const Completed = () => {
 
     fetchTasks();
   }, [username, setIsLoading, navigate]);
+
+  useEffect(() => {
+    if (sound) {
+      play();
+      setIsPlaying(true);
+      const fadeIn = setInterval(() => {
+        setVolume((v) => {
+          if (v < 1) {
+            return v + 0.1;
+          } else {
+            clearInterval(fadeIn);
+            return 1;
+          }
+        });
+      }, 100);
+
+      return () => {
+        clearInterval(fadeIn);
+        stop();
+      };
+    }
+  }, [sound, play, stop]);
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      pause();
+    } else {
+      play();
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   const handleTaskClick = (task) => {
     setSelectedTask(task);
@@ -57,12 +98,17 @@ const Completed = () => {
       <Header />
       <Navigation />
       <div className="main mt-4 container-sm">
+        <div className="audio-controls mb-3">
+          <button onClick={handlePlayPause} className="btn btn-secondary rounded-5 me-2">
+          ♬　{isPlaying ? '⏸︎' : '▶'}　
+          </button>
+        </div>
         {completedTasks.length === 0 ? (
-          <h2>Let's do a date, leave a sweet memory with your partner!</h2>
+          <h2 class="text-center">Let’s have a date and create a sweet memory together.</h2>
         ) : (
           <div>
-            <p class="mb-2">你們兩位了不起的人一起完成了 {completedTasks.length} 次約會！</p>
-            <p class="mb-2">二人の素晴らしいカップルは一緒に {completedTasks.length} 回のデートを完了しました！</p>
+            <p className="mb-2">你們兩位了不起的人一起完成了 {completedTasks.length} 次約會！</p>
+            <p className="mb-2">二人の素晴らしいカップルは一緒に {completedTasks.length} 回のデートを完了しました！</p>
             <p>You two amazing people have completed {completedTasks.length} dates together!</p>
             <div className="row mt-3 align-items-end flex-wrap-reverse justify-content-center">
               {completedTasks.map((task, index) => (

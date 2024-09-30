@@ -30,7 +30,7 @@ export const AppProvider = ({ children }) => {
         setCompletedTasks(tasks);
         setCurrentWeek(newWeek);
 
-        if (completedCount % 7 === 0) {
+        if (completedCount > 0 && completedCount % 7 === 0) {
           await generateTodoList(username);
           const newTodoList = await getTodoList(username);
           setTodoList(newTodoList);

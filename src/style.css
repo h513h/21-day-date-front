@@ -7,22 +7,24 @@ body {
 }
 
 .option input[type="radio"] {
-  display: none;  /* 隱藏圓形按鈕 */
+  appearance: none;
 }
+
 .option img {
   width: 150px;
   height: 150px;
   object-fit: cover;
   border: 2px solid transparent;
+  opacity: 0.6;
   transition: border-color 0.5s ease, opacity 0.5s ease;  /* 加入漸變效果 */
 }
-.option input[type="radio"]:checked + img {
-  border-color: #bf3a3a;  /* 選中的邊框顏色 */
+
+.option input[type="radio"]:checked ~ img {
+  border-color: #ff91af;  /* 選中的邊框顏色 */
+  border-width: 2px;
   opacity: 1;  /* 選中時完全顯示 */
 }
-.option img {
-  opacity: 0.8;  /* 初始圖片透明度 */
-}
+
 :root {
   --bs-primary: #ff91af;  /* Custom primary color (blue) */
   --bs-primary-rgb: 255, 145,175;

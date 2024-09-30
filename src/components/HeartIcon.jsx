@@ -28,7 +28,7 @@ const HeartIcon = ({ item, username }) => {
     }
 
     if (hasProcessingTask && item.done !== 'processing') {
-      alert("You're almost there! Let's finish this challenge first, then you can unlock the next adventure. Keep going, you're doing amazing!");
+      alert("快完成了！讓我們先完成這個挑戰，就可以解鎖下一個冒險了。繼續加油，表現得非常棒！\nもう少しで達成できるよ！まずはこのチャレンジを終わらせて、次のを解放しよう。頑張ってね！\nYou're almost there!Let's finish this challenge first, then you can unlock the next adventure.Keep going, you're doing amazing!");
       return;
     }
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSound from 'use-sound';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
@@ -12,6 +13,7 @@ import { Modal } from 'bootstrap';
 const Processing = () => {
   const navigate = useNavigate();
   const { username, todoList, isLoading } = useAppContext();
+  const [play, { stop }] = useSound('/audio/challenge_audio.mp3', { volume: 0.5 });
   
   const processingItem = todoList.find(item => item.done === 'processing');
 
@@ -20,8 +22,12 @@ const Processing = () => {
       navigate('/login');
     } else if (!processingItem) {
       navigate('/');
+    } else {
+      play();
     }
-  }, [username, processingItem, navigate]);
+
+    return () => stop();
+  }, [username, processingItem, navigate, play, stop]);
 
   useEffect(() => {
     const finishNowModal = document.getElementById('now');

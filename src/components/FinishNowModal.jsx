@@ -59,8 +59,8 @@ const FinishNowModal = () => {
             <div className="mb-3">
               <div className="row align-items-end">
                 <p>兩位的感覺如何？ / 今日の感じは？ / How's your feelings?</p>
-                <div className="col-6 option py-3">
-                  <label className="d-flex flex-column justify-content-center">
+                <div className="col-6 py-3">
+                  <label className="d-flex flex-column justify-content-center option">
                     <input 
                       type="radio" 
                       name="image" 
@@ -71,8 +71,8 @@ const FinishNowModal = () => {
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6iDq1WKRKqZBVPOdzkIT6wvsfxXBchnrhUZfzmeR3tt8WMU6ywXaYWC1JwVX4SsLQWK5fBB7D70Qs3GoqzMl5GUCxuuPvLVPIZCn6g45nlskrpB0QXd8ng2T1jDVdpgmp99_BSXtLLak/s400/date_couple.png" alt="Happy couple"/>
                   </label>
                 </div>
-                <div className="col-6 option py-3">
-                  <label className="d-flex flex-column justify-content-center">
+                <div className="col-6 py-3">
+                  <label className="d-flex flex-column justify-content-center option">
                     <input 
                       type="radio" 
                       name="image" 
@@ -83,8 +83,8 @@ const FinishNowModal = () => {
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMIapwP_zvVLJwATjH-d8cga_jVPuygd3O7Bgtb5ZMs9_1HEzoSziyRvNThXLD3EUKXGH5Tz3OBeMBxS-tpoUplmjNwNVHIb3x5TBZ3-a69GWiIPXFPEdqvNME4l8SMMEZ42MuE05fVZo/s400/couple_okoru_man.png" alt="Happy lady"/>
                   </label>
                 </div>
-                <div className="col-6 option py-3">
-                  <label className="d-flex flex-column justify-content-center">
+                <div className="col-6 py-3">
+                  <label className="d-flex flex-column justify-content-center option">
                     <input 
                       type="radio" 
                       name="image" 
@@ -95,8 +95,8 @@ const FinishNowModal = () => {
                     <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi20eSwmtjX6ZaBNGUVGR_F6Srox8-cmHH7sCyChVI4-Ctelj-1WbU9MF-5JJx94qpipZIyzDqGGEq_LxXPotlaMOe9epBtMdGsgMLdluopHDyIu-jSA-p7kaC7oBb0M0dHjzd8fH2yUuo/s400/couple_okoru_woman.png" alt="Happy man"/>
                   </label>
                 </div>
-                <div className="col-6 option py-3">
-                  <label className="d-flex  flex-column justify-content-center">
+                <div className="col-6 py-3">
+                  <label className="d-flex flex-column justify-content-center option">
                     <input 
                       type="radio" 
                       name="image" 

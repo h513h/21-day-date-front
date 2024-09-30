@@ -5,7 +5,7 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import HeartIcon from '../components/HeartIcon';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { getTodoList, generateTodoList } from '../api';
+import { getTodoList } from '../api';
 import { useAppContext } from '../AppContext';
 
 const Home = () => {
@@ -22,11 +22,6 @@ const Home = () => {
       setIsLoading(true);
       try {
         let list = await getTodoList(username);
-        
-        if (list.length === 0) {
-          await generateTodoList(username);
-          list = await getTodoList(username);
-        }
 
         if (list.length === 0) {
           navigate('/login');
