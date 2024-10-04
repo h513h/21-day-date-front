@@ -45,6 +45,7 @@ const Home = () => {
 
   if (!username || todoList.length === 0) {
     console.log(username)
+    console.log(todoList.length)
   }
 
   return (
