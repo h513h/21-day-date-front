@@ -10,38 +10,38 @@ import { useAppContext } from '../AppContext';
 
 const Home = () => {
   const navigate = useNavigate();
-  // const { username, todoList, setTodoList, updateProcessingTaskStatus, hasProcessingTask, isLoading, setIsLoading } = useAppContext();
+  const { username, todoList, setTodoList, updateProcessingTaskStatus, hasProcessingTask, isLoading, setIsLoading } = useAppContext();
 
-  // useEffect(() => {
-  //   const fetchTodoList = async () => {
-  //     if (!username) {
-  //       navigate('/login');
-  //       return;
-  //     }
+  useEffect(() => {
+    const fetchTodoList = async () => {
+      if (!username) {
+        navigate('/login');
+        return;
+      }
 
-  //     setIsLoading(true);
-  //     try {
-  //       let list = await getTodoList(username);
+      setIsLoading(true);
+      try {
+        let list = await getTodoList(username);
 
-  //       if (list.length === 0) {
-  //         navigate('/login');
-  //       } else {
-  //         setTodoList(list);
-  //         updateProcessingTaskStatus(list);
-  //       }
-  //     } catch (error) {
-  //       navigate('/login');
-  //     } finally {
-  //       setIsLoading(false);
-  //     }
-  //   };
+        if (list.length === 0) {
+          navigate('/login');
+        } else {
+          setTodoList(list);
+          updateProcessingTaskStatus(list);
+        }
+      } catch (error) {
+        navigate('/login');
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  //   fetchTodoList();
-  // }, [username, navigate, setTodoList, updateProcessingTaskStatus, setIsLoading]);
+    fetchTodoList();
+  }, [username, navigate, setTodoList, updateProcessingTaskStatus, setIsLoading]);
 
-  // if (isLoading) {
-  //   return <LoadingSpinner />;
-  // }
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
   // if (!username || todoList.length === 0) {
   //   return null;
@@ -51,7 +51,7 @@ const Home = () => {
     <div className="container-sm my-5">
       <Header />
       <Navigation />
-      {/* {hasProcessingTask && (
+      {hasProcessingTask && (
         <div className="alert alert-info m-0 mt-3" role="alert">
           正好在挑戰的過程中！完成後，隨時可以去嘗試下一個挑戰。你們表現得非常出色！<br/>
           現在、挑戦中ですね！終わったら、ぜひ新しいチャレンジにも挑戦してみてください。絶好調ですよ！<br/>
@@ -62,7 +62,7 @@ const Home = () => {
         {todoList.map((item) => (
           <HeartIcon key={item.id} item={item} username={username} />
         ))}
-      </ul> */}
+      </ul>
       <Footer />
     </div>
   );

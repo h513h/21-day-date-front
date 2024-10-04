@@ -110,7 +110,7 @@ const Completed = () => {
             <p className="mb-2">你們兩位了不起的人一起完成了 {completedTasks.length} 次約會！</p>
             <p className="mb-2">二人の素晴らしいカップルは一緒に {completedTasks.length} 回のデートを完了しました！</p>
             <p>You two amazing people have completed {completedTasks.length} dates together!</p>
-            <div className="row mt-3 align-items-end flex-wrap-reverse justify-content-center">
+            <div className="row mt-3 align-items-end flex-wrap-reverse justify-content-start">
               {completedTasks.map((task, index) => (
                 <div 
                   key={index} 
