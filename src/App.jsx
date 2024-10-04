@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { AppProvider } from './AppContext';
-import ErrorBoundary from './components/ErrorBoundary';
 import Login from './pages/Login';
 import Home from './pages/Home';
 import Completed from './pages/Completed';
@@ -21,8 +20,7 @@ function App() {
   };
 
   return (
-    <ErrorBoundary>
-      <AppProvider>
+    <AppProvider>
         <Router>
           <Routes>
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
@@ -32,7 +30,6 @@ function App() {
           </Routes>
         </Router>
       </AppProvider>
-    </ErrorBoundary>
   );
 }
 
