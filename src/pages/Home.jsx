@@ -9,47 +9,47 @@ import { getTodoList } from '../api';
 import { useAppContext } from '../AppContext';
 
 const Home = () => {
-  const navigate = useNavigate();
-  const { username, todoList, setTodoList, updateProcessingTaskStatus, hasProcessingTask, isLoading, setIsLoading } = useAppContext();
+  // const navigate = useNavigate();
+  // const { username, todoList, setTodoList, updateProcessingTaskStatus, hasProcessingTask, isLoading, setIsLoading } = useAppContext();
 
-  useEffect(() => {
-    const fetchTodoList = async () => {
-      if (!username) {
-        navigate('/login');
-        return;
-      }
+  // useEffect(() => {
+  //   const fetchTodoList = async () => {
+  //     if (!username) {
+  //       navigate('/login');
+  //       return;
+  //     }
 
-      setIsLoading(true);
-      try {
-        let list = await getTodoList(username);
+  //     setIsLoading(true);
+  //     try {
+  //       let list = await getTodoList(username);
 
-        if (list.length === 0) {
-          navigate('/login');
-        } else {
-          setTodoList(list);
-          updateProcessingTaskStatus(list);
-        }
-      } catch (error) {
-        navigate('/login');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  //       if (list.length === 0) {
+  //         navigate('/login');
+  //       } else {
+  //         setTodoList(list);
+  //         updateProcessingTaskStatus(list);
+  //       }
+  //     } catch (error) {
+  //       navigate('/login');
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
 
-    fetchTodoList();
-  }, [username, navigate, setTodoList, updateProcessingTaskStatus, setIsLoading]);
+  //   fetchTodoList();
+  // }, [username, navigate, setTodoList, updateProcessingTaskStatus, setIsLoading]);
 
-  if (isLoading) {
-    return <LoadingSpinner />;
-  }
+  // if (isLoading) {
+  //   return <LoadingSpinner />;
+  // }
 
-  if (!username || todoList.length === 0) {
-    return null;
-  }
+  // if (!username || todoList.length === 0) {
+  //   return null;
+  // }
 
   return (
     <div className="container-sm my-5">
-      <Header />
+      {/* <Header />
       <Navigation />
       {hasProcessingTask && (
         <div className="alert alert-info m-0 mt-3" role="alert">
@@ -62,7 +62,7 @@ const Home = () => {
         {todoList.map((item) => (
           <HeartIcon key={item.id} item={item} username={username} />
         ))}
-      </ul>
+      </ul> */}
       <Footer />
     </div>
   );
