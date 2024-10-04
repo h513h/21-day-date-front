@@ -31,15 +31,10 @@ const Home = () => {
     };
 
     fetchTodoList();
-  }, [username, navigate, todoList, setTodoList, updateProcessingTaskStatus, setIsLoading]);
+  }, [username, navigate, setTodoList, updateProcessingTaskStatus, setIsLoading]);
 
   if (isLoading) {
     return <LoadingSpinner />;
-  }
-
-  if (!username || todoList.length === 0) {
-    console.log(username)
-    console.log(todoList.length)
   }
 
   return (
