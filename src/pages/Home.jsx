@@ -28,14 +28,11 @@ const Home = () => {
         } else {
           setTodoList(list);
           updateProcessingTaskStatus(list);
-          console.log("APIs loaded")
         }
       } catch (error) {
-        console.error('Error fetching todo list:', error);
         navigate('/login');
       } finally {
         setIsLoading(false);
-        console.log("close Loading")
       }
     };
 
