@@ -27,6 +27,7 @@ const Home = () => {
       } catch (error) {
         navigate('/login');
       } finally {
+        console.log(todoList)
         setIsLoading(false);
       }
     };

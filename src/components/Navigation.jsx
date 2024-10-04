@@ -26,7 +26,7 @@ const Navigation = () => {
           onClick={() => handleNavigation('/')}
           type="button"
         >
-         首頁 / ホーム / Home
+         Home
         </button>
       </li>
       <li className="col-4 p-2" onClick={() => handleNavigation('/processing')}>
@@ -44,7 +44,7 @@ const Navigation = () => {
           onClick={() => handleNavigation('/completed')}
           type="button"
         >
-          已完成 / 完了 / Completed
+          完了 / Completed
         </button>
       </li>
     </ul>
