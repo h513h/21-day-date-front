@@ -28,6 +28,7 @@ const Home = () => {
         } else {
           setTodoList(list);
           updateProcessingTaskStatus(list);
+          console.log('Initial username from localStorage:', localStorage.getItem('username'));
         }
       } catch (error) {
         console.error('Error fetching todo list:', error);
