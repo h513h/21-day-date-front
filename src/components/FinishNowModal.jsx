@@ -66,6 +66,7 @@ const FinishNowModal = () => {
                       name="image" 
                       value="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6iDq1WKRKqZBVPOdzkIT6wvsfxXBchnrhUZfzmeR3tt8WMU6ywXaYWC1JwVX4SsLQWK5fBB7D70Qs3GoqzMl5GUCxuuPvLVPIZCn6g45nlskrpB0QXd8ng2T1jDVdpgmp99_BSXtLLak/s400/date_couple.png"
                       onChange={(e) => setSelectedImage(e.target.value)}
+                      required
                     />
                     雙方都很開心 /<br/> 二人とも楽しかった /<br/> Both of us are happy.
                     <div class="ratio ratio-1x1 mt-2">
@@ -80,6 +81,7 @@ const FinishNowModal = () => {
                       name="image" 
                       value="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMIapwP_zvVLJwATjH-d8cga_jVPuygd3O7Bgtb5ZMs9_1HEzoSziyRvNThXLD3EUKXGH5Tz3OBeMBxS-tpoUplmjNwNVHIb3x5TBZ3-a69GWiIPXFPEdqvNME4l8SMMEZ42MuE05fVZo/s400/couple_okoru_man.png"
                       onChange={(e) => setSelectedImage(e.target.value)}
+                      required
                     />
                     男生不開心 / <br/>彼氏は楽しくなかった / <br/>The male partner is not happy.
                     <div class="ratio ratio-1x1 mt-2">
@@ -94,6 +96,7 @@ const FinishNowModal = () => {
                       name="image" 
                       value="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi20eSwmtjX6ZaBNGUVGR_F6Srox8-cmHH7sCyChVI4-Ctelj-1WbU9MF-5JJx94qpipZIyzDqGGEq_LxXPotlaMOe9epBtMdGsgMLdluopHDyIu-jSA-p7kaC7oBb0M0dHjzd8fH2yUuo/s400/couple_okoru_woman.png"
                       onChange={(e) => setSelectedImage(e.target.value)}
+                      required
                     />
                     女生不開心 / <br/>彼女は楽しくなかった / <br/>The female partner is not happy.
                     <div class="ratio ratio-1x1 mt-2">
@@ -108,6 +111,7 @@ const FinishNowModal = () => {
                       name="image" 
                       value="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYEYEmYCx1qosBWoFBbqPuQZ5-IHZuheWT3vyNHM5mr7P9XsLq6EKSTfbzsM9alX5wew3wBNqaQP-KVhvMaXgAfp7eBLmloDQvmb8E2hh5X1gasMmZuj-5-iS0XYdAorEWlbyH548CaFk/s400/kenka_couple.png"
                       onChange={(e) => setSelectedImage(e.target.value)}
+                      required
                     />
                     雙方都不開心 / <br/>二人とも楽しくなかった / <br/>Both of us are not happy.
                     <div class="ratio ratio-1x1 mt-2">
@@ -125,6 +129,7 @@ const FinishNowModal = () => {
                 rows="3"
                 value={comment1}
                 onChange={(e) => setComment1(e.target.value)}
+                required
               ></textarea>
             </div>
             <hr />
@@ -136,6 +141,7 @@ const FinishNowModal = () => {
                 rows="3"
                 value={comment2}
                 onChange={(e) => setComment2(e.target.value)}
+                required
               ></textarea>
             </div>
             <div className="d-flex justify-content-end">
