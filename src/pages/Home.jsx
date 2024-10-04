@@ -12,14 +12,16 @@ const Home = () => {
   const { username, todoList, hasProcessingTask, isLoading, fetchTodoList } = useAppContext();
 
   useEffect(() => {
+    console.log("username:", username);
+    console.log("todoList:", todoList);
+    console.log("isLoading:", isLoading);
     if (!username) {
       navigate('/login');
       return;
     }
-
     // 使用 AppContext 中的 fetchTodoList 方法
     fetchTodoList();
-  }, [username, navigate, fetchTodoList]);
+  }, [username, todoList, isLoading,navigate, fetchTodoList]);
 
   if (isLoading) {
     return <LoadingSpinner />;
