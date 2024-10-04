@@ -18,16 +18,17 @@ const Home = () => {
         navigate('/login');
         return;
       }
-
       setIsLoading(true);
       try {
+        console.log(username)
         let list = await getTodoList(username);
+        console.log(list)
         setTodoList(list);
+        console.log(todoList)
         updateProcessingTaskStatus(list);
       } catch (error) {
         navigate('/login');
       } finally {
-        console.log(todoList)
         setIsLoading(false);
       }
     };
