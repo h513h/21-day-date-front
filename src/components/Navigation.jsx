@@ -19,7 +19,7 @@ const Navigation = () => {
   };
 
   return (
-    <ul className="nav row text-center mt-3">
+    <ul className="nav row text-center mt-3 align-items-stretch">
       <li className="col-4 p-2">
         <button
           className={`w-100 py-2 btn btn-outline-primary ${isActive('/') ? 'btn-primary text-white' : ''}`}
