@@ -5,33 +5,21 @@ import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
 import HeartIcon from '../components/HeartIcon';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { getTodoList } from '../api';
 import { useAppContext } from '../AppContext';
 
 const Home = () => {
   const navigate = useNavigate();
-  const { username, todoList, setTodoList, updateProcessingTaskStatus, hasProcessingTask, isLoading, setIsLoading } = useAppContext();
+  const { username, todoList, hasProcessingTask, isLoading, fetchTodoList } = useAppContext();
 
   useEffect(() => {
-    const fetchTodoList = async () => {
-      if (!username) {
-        navigate('/login');
-        return;
-      }
-      setIsLoading(true);
-      try {
-        let list = await getTodoList(username);
-        setTodoList(list);
-        updateProcessingTaskStatus(list);
-      } catch (error) {
-        navigate('/login');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    if (!username) {
+      navigate('/login');
+      return;
+    }
 
+    // 使用 AppContext 中的 fetchTodoList 方法
     fetchTodoList();
-  }, [username, navigate, setTodoList, updateProcessingTaskStatus, setIsLoading]);
+  }, [username, navigate, fetchTodoList]);
 
   if (isLoading) {
     return <LoadingSpinner />;
