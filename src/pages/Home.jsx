@@ -43,9 +43,9 @@ const Home = () => {
     return <LoadingSpinner />;
   }
 
-  // if (!username || todoList.length === 0) {
-  //   return null;
-  // }
+  if (!username || todoList.length === 0) {
+    console.log(username)
+  }
 
   return (
     <div className="container-sm my-5">
