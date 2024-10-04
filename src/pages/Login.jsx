@@ -23,7 +23,6 @@ const Login = () => {
         setContextUsername(username);
         localStorage.setItem('username', username);
         console.log('Username set, navigating to home...');
-        console.log('Initial username from localStorage:', localStorage.getItem('username'));
         navigate('/');
       } else {
         console.log('Login failed:', response.error);

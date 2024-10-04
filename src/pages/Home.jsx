@@ -28,13 +28,14 @@ const Home = () => {
         } else {
           setTodoList(list);
           updateProcessingTaskStatus(list);
-          console.log('Initial username from localStorage:', localStorage.getItem('username'));
+          console.log("APIs loaded")
         }
       } catch (error) {
         console.error('Error fetching todo list:', error);
         navigate('/login');
       } finally {
         setIsLoading(false);
+        console.log("close Loading")
       }
     };
 
@@ -51,7 +52,7 @@ const Home = () => {
 
   return (
     <div className="container-sm my-5">
-      <Header />
+      {/* <Header />
       <Navigation />
       {hasProcessingTask && (
         <div className="alert alert-info m-0 mt-3" role="alert">
@@ -64,7 +65,7 @@ const Home = () => {
         {todoList.map((item) => (
           <HeartIcon key={item.id} item={item} username={username} />
         ))}
-      </ul>
+      </ul> */}
       <Footer />
     </div>
   );
