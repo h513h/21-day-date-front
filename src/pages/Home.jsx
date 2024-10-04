@@ -56,16 +56,10 @@ const Home = () => {
           You're in the middle of a challenge right now! Once you've completed it, feel free to explore and take on another one. You're doing great!
         </div>
       )}
-      {/* <ul className="main row pt-4 list-unstyled">
+      <ul className="main row pt-4 list-unstyled">
         {todoList.map((item) => (
           <HeartIcon key={item.id} item={item} username={username} />
         ))}
-      </ul> */}
-      <ul className="main row pt-4 list-unstyled">
-        {todoList.map((item) => {
-          console.log("Rendering HeartIcon for item:", item); // 檢查每個項目是否被渲染
-          return <HeartIcon key={item.id} item={item} username={username} />;
-        })}
       </ul>
       <Footer />
     </div>
