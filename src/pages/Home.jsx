@@ -58,6 +58,7 @@ const Home = () => {
       )}
       <ul className="main row pt-4 list-unstyled">
         {todoList.map((item) => (
+          console.log("Rendering HeartIcon for item:", item);
           <HeartIcon key={item.id} item={item} username={username} />
         ))}
       </ul>
