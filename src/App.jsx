@@ -24,7 +24,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
-            <Route path="/" element={<Home username={username} />} />
+            <Route path="/home" element={<Home username={username} />} />
             <Route path="/completed" element={<Completed username={username} />} />
             <Route path="/processing" element={<Processing username={username} />} />
           </Routes>

@@ -17,13 +17,12 @@ const Login = () => {
       console.log('Sending login request...');
       const response = await login(username, password);
       console.log('Received response:', response);
-      // Since the response contains { message: "Login successful", user_id: 2 }
       if (response.message === 'Login successful') {
         console.log('Login successful, setting username...');
         setContextUsername(username);
         localStorage.setItem('username', username);
         console.log('Username set, navigating to home...');
-        navigate('/');
+        navigate('/home');
       } else {
         console.log('Login failed:', response.error);
         setError('Failed to log in. Please try again.');

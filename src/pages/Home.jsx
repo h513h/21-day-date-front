@@ -52,7 +52,7 @@ const Home = () => {
 
   return (
     <div className="container-sm my-5">
-      {/* <Header />
+      <Header />
       <Navigation />
       {hasProcessingTask && (
         <div className="alert alert-info m-0 mt-3" role="alert">
@@ -65,7 +65,7 @@ const Home = () => {
         {todoList.map((item) => (
           <HeartIcon key={item.id} item={item} username={username} />
         ))}
-      </ul> */}
+      </ul>
       <Footer />
     </div>
   );
