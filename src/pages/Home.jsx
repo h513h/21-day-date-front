@@ -22,13 +22,8 @@ const Home = () => {
       setIsLoading(true);
       try {
         let list = await getTodoList(username);
-
-        if (list.length === 0) {
-          navigate('/login');
-        } else {
-          setTodoList(list);
-          updateProcessingTaskStatus(list);
-        }
+        setTodoList(list);
+        updateProcessingTaskStatus(list);
       } catch (error) {
         navigate('/login');
       } finally {
