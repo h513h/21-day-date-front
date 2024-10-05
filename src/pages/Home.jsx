@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Navigation from '../components/Navigation';
@@ -7,20 +7,42 @@ import HeartIcon from '../components/HeartIcon';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useAppContext } from '../AppContext';
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000; // 2 seconds
+
 const Home = () => {
   const navigate = useNavigate();
   const { username, todoList, hasProcessingTask, isLoading, fetchTodoList } = useAppContext();
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     if (!username) {
       navigate('/login');
       return;
     }
-    // 使用 AppContext 中的 fetchTodoList 方法
-    fetchTodoList();
-  }, [username, navigate, fetchTodoList]);
 
-  if (isLoading) {
+    const fetchData = async () => {
+      try {
+        await fetchTodoList();
+        if (todoList.length === 0 && retryCount < MAX_RETRIES) {
+          setTimeout(() => {
+            setRetryCount(prevCount => prevCount + 1);
+          }, RETRY_DELAY);
+        }
+      } catch (error) {
+        console.error('Failed to fetch todo list:', error);
+        if (retryCount < MAX_RETRIES) {
+          setTimeout(() => {
+            setRetryCount(prevCount => prevCount + 1);
+          }, RETRY_DELAY);
+        }
+      }
+    };
+
+    fetchData();
+  }, [username, navigate, fetchTodoList, todoList.length, retryCount]);
+
+  if (isLoading || (todoList.length === 0 && retryCount < MAX_RETRIES)) {
     return <LoadingSpinner />;
   }
 

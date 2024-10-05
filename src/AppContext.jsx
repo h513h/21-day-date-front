@@ -5,6 +5,9 @@ import LoadingSpinner from './components/LoadingSpinner';
 
 const AppContext = createContext();
 
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000; // 2 seconds
+
 export const AppProvider = ({ children }) => {
   const [username, setUsername] = useState(getUsername());
   const [todoList, setTodoList] = useState([]);
@@ -12,6 +15,7 @@ export const AppProvider = ({ children }) => {
   const [currentWeek, setCurrentWeek] = useState(1);
   const [hasProcessingTask, setHasProcessingTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const updateProcessingTaskStatus = useCallback((updatedList) => {
     setTodoList(updatedList);
@@ -19,9 +23,10 @@ export const AppProvider = ({ children }) => {
     setHasProcessingTask(hasProcessing);
   }, []);
 
-  const updateAfterTaskCompletion = useCallback(async () => {
+  const updateAfterTaskCompletion = useCallback(async (retryCount = 0) => {
     if (username) {
       setIsLoading(true);
+      setError(null);
       try {
         const tasks = await getCompletedTasks(username);
         const completedCount = tasks.length;
@@ -40,15 +45,20 @@ export const AppProvider = ({ children }) => {
         }
       } catch (error) {
         console.error('Error in updateAfterTaskCompletion:', error);
+        setError('Failed to update tasks. Please try again.');
+        if (retryCount < MAX_RETRIES) {
+          setTimeout(() => updateAfterTaskCompletion(retryCount + 1), RETRY_DELAY);
+        }
       } finally {
         setIsLoading(false);
       }
     }
   }, [username, updateProcessingTaskStatus]);
 
-  const fetchTodoList = useCallback(async () => {
+  const fetchTodoList = useCallback(async (retryCount = 0) => {
     if (username) {
       setIsLoading(true);
+      setError(null);
       try {
         let list = await getTodoList(username);
 
@@ -57,10 +67,19 @@ export const AppProvider = ({ children }) => {
           list = await getTodoList(username);
         }
 
+        if (list.length === 0 && retryCount < MAX_RETRIES) {
+          setTimeout(() => fetchTodoList(retryCount + 1), RETRY_DELAY);
+          return;
+        }
+
         setTodoList(list);
         updateProcessingTaskStatus(list);
       } catch (error) {
         console.error('Error fetching todo list:', error);
+        setError('Failed to fetch todo list. Please try again.');
+        if (retryCount < MAX_RETRIES) {
+          setTimeout(() => fetchTodoList(retryCount + 1), RETRY_DELAY);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -87,7 +106,8 @@ export const AppProvider = ({ children }) => {
       isLoading,
       setIsLoading,
       fetchTodoList,
-      updateAfterTaskCompletion
+      updateAfterTaskCompletion,
+      error
     }}>
       {isLoading && <LoadingSpinner />}
       {children}
