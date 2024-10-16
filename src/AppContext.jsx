@@ -31,13 +31,17 @@ export const AppProvider = ({ children }) => {
         const tasks = await getCompletedTasks(username);
         const completedCount = tasks.length;
         const newWeek = Math.floor(completedCount / 7) + 1;
-
+  
         setCompletedTasks(tasks);
         setCurrentWeek(newWeek);
-
+  
         if (completedCount > 0 && completedCount % 7 === 0) {
           await generateTodoList(username);
-          const newTodoList = await getTodoList(username);
+          let newTodoList = await getTodoList(username);
+          
+          // 對新生成的列表進行排序
+          newTodoList = newTodoList.sort((a, b) => parseInt(a.content.time) - parseInt(b.content.time));
+          
           setTodoList(newTodoList);
           updateProcessingTaskStatus(newTodoList);
         } else {
@@ -61,19 +65,22 @@ export const AppProvider = ({ children }) => {
       setError(null);
       try {
         let list = await getTodoList(username);
-
+  
         if (list.length === 0) {
           await generateTodoList(username);
           list = await getTodoList(username);
         }
-
+  
         if (list.length === 0 && retryCount < MAX_RETRIES) {
           setTimeout(() => fetchTodoList(retryCount + 1), RETRY_DELAY);
           return;
         }
-
-        setTodoList(list);
-        updateProcessingTaskStatus(list);
+  
+        // 對列表進行排序
+        const sortedList = list.sort((a, b) => parseInt(a.content.time) - parseInt(b.content.time));
+  
+        setTodoList(sortedList);
+        updateProcessingTaskStatus(sortedList);
       } catch (error) {
         console.error('Error fetching todo list:', error);
         setError('Failed to fetch todo list. Please try again.');

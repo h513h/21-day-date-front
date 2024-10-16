@@ -25,7 +25,7 @@ export const login = (username, password) =>
   api.post('/login', { username, password }).then(handleResponse);
 
 export const getCompletedTasks = (username) => 
-  api.get(`/${username}/completed_tasks`).then(handleResponse);
+  api.get(`/${username}/completed_tasks`).then(handleResponse).then(tasks => tasks.reverse());
 
 export const addCompletedTask = (username, taskData) => 
   api.post(`/${username}/completed_tasks`, taskData).then(handleResponse);
