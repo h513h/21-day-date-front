@@ -9,6 +9,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { getCompletedTasks } from '../api';
 import { Modal } from 'bootstrap';
 import { useAppContext } from '../AppContext';
+import { useTranslation } from 'react-i18next';
 
 const Completed = () => {
   const [completedTasks, setCompletedTasks] = useState([]);
@@ -17,6 +18,7 @@ const Completed = () => {
   const navigate = useNavigate();
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(0);
+  const { t } = useTranslation();
 
   const [play, { pause, stop, sound }] = useSound('/audio/completed_audio.mp3', {
     volume: volume,
@@ -107,9 +109,7 @@ const Completed = () => {
           <h2 class="text-center">Let’s have a date and create a sweet memory together.</h2>
         ) : (
           <div>
-            <p className="mb-2">你們兩位了不起的人一起完成了 {completedTasks.length} 次約會！</p>
-            <p className="mb-2">二人の素晴らしいカップルは一緒に {completedTasks.length} 回のデートを完了しました！</p>
-            <p>You two amazing people have completed {completedTasks.length} dates together!</p>
+            <b className="mb-2">{t('record1')} {completedTasks.length} {t('record2')}</b>
             <div className="row mt-3 align-items-end">
               {completedTasks.map((task, index) => (
                 <div 

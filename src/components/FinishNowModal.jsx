@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { addCompletedTask, updateTodoItem } from '../api';
 import { useAppContext } from '../AppContext';
 import { Modal } from 'bootstrap';
+import { useTranslation } from 'react-i18next';
 
 const FinishNowModal = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const FinishNowModal = () => {
   const [selectedImage, setSelectedImage] = useState('');
   const [comment1, setComment1] = useState('');
   const [comment2, setComment2] = useState('');
+  const { t } = useTranslation();
 
   const handleFinish = async () => {
     setIsLoading(true);
@@ -55,12 +57,12 @@ const FinishNowModal = () => {
             <div className="d-flex justify-content-end">
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <h3 className="mb-3">今日の記念 / Record for today</h3>
+            <h3 className="mb-3">{t('record_today')}</h3>
             <div className="mb-3">
-              <div className="row align-items-end">
-                <p>兩位的感覺如何？ / 今日の感じは？ / How's your feelings?</p>
+              <div className="row">
+                <p>{t('feeling')}</p>
                 <div className="col-6 py-3">
-                  <label className="d-flex flex-column justify-content-center option">
+                  <label className="d-flex flex-column justify-content-between option h-100">{t('both_happy')}
                     <input 
                       type="radio" 
                       name="image" 
@@ -68,14 +70,13 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                       required
                     />
-                    雙方都很開心 /<br/> 二人とも楽しかった /<br/> Both of us are happy.
                     <div class="ratio ratio-1x1 mt-2">
                       <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6iDq1WKRKqZBVPOdzkIT6wvsfxXBchnrhUZfzmeR3tt8WMU6ywXaYWC1JwVX4SsLQWK5fBB7D70Qs3GoqzMl5GUCxuuPvLVPIZCn6g45nlskrpB0QXd8ng2T1jDVdpgmp99_BSXtLLak/s400/date_couple.png" alt="Happy couple"/>
                     </div>
                   </label>
                 </div>
                 <div className="col-6 py-3">
-                  <label className="d-flex flex-column justify-content-center option">
+                  <label className="d-flex flex-column justify-content-between h-100 option">{t('m_unhappy')}
                     <input 
                       type="radio" 
                       name="image" 
@@ -83,14 +84,13 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                       required
                     />
-                    男生不開心 / <br/>彼氏は楽しくなかった / <br/>The male partner is not happy.
                     <div class="ratio ratio-1x1 mt-2">
                       <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjMIapwP_zvVLJwATjH-d8cga_jVPuygd3O7Bgtb5ZMs9_1HEzoSziyRvNThXLD3EUKXGH5Tz3OBeMBxS-tpoUplmjNwNVHIb3x5TBZ3-a69GWiIPXFPEdqvNME4l8SMMEZ42MuE05fVZo/s400/couple_okoru_man.png" alt="Happy lady"/>
                     </div>
                   </label>
                 </div>
                 <div className="col-6 py-3">
-                  <label className="d-flex flex-column justify-content-center option">
+                  <label className="d-flex flex-column justify-content-between h-100 option">{t('f_unhappy')}
                     <input 
                       type="radio" 
                       name="image" 
@@ -98,14 +98,13 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                       required
                     />
-                    女生不開心 / <br/>彼女は楽しくなかった / <br/>The female partner is not happy.
                     <div class="ratio ratio-1x1 mt-2">
                       <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi20eSwmtjX6ZaBNGUVGR_F6Srox8-cmHH7sCyChVI4-Ctelj-1WbU9MF-5JJx94qpipZIyzDqGGEq_LxXPotlaMOe9epBtMdGsgMLdluopHDyIu-jSA-p7kaC7oBb0M0dHjzd8fH2yUuo/s400/couple_okoru_woman.png" alt="Happy man"/>
                     </div>
                   </label>
                 </div>
                 <div className="col-6 py-3">
-                  <label className="d-flex flex-column justify-content-center option">
+                  <label className="d-flex flex-column justify-content-between h-100 option">{t('unhappy')}
                     <input 
                       type="radio" 
                       name="image" 
@@ -113,7 +112,6 @@ const FinishNowModal = () => {
                       onChange={(e) => setSelectedImage(e.target.value)}
                       required
                     />
-                    雙方都不開心 / <br/>二人とも楽しくなかった / <br/>Both of us are not happy.
                     <div class="ratio ratio-1x1 mt-2">
                       <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYEYEmYCx1qosBWoFBbqPuQZ5-IHZuheWT3vyNHM5mr7P9XsLq6EKSTfbzsM9alX5wew3wBNqaQP-KVhvMaXgAfp7eBLmloDQvmb8E2hh5X1gasMmZuj-5-iS0XYdAorEWlbyH548CaFk/s400/kenka_couple.png" alt="angry couple"/>
                     </div>
@@ -122,7 +120,7 @@ const FinishNowModal = () => {
               </div>
             </div>
             <div className="mb-3">
-              <label htmlFor="comment1" className="form-label">女生今天的心得 / 彼女今日の感想 / Comment from the female partner</label>
+              <label htmlFor="comment1" className="form-label">{t('comment_f')}</label>
               <textarea 
                 className="form-control" 
                 id="comment1" 
@@ -134,7 +132,7 @@ const FinishNowModal = () => {
             </div>
             <hr />
             <div className="mb-3">
-              <label htmlFor="comment2" className="form-label">男生今天的心得 / 彼氏今日の感想 / Comment from the male partner</label>
+              <label htmlFor="comment2" className="form-label">{t('comment_m')}</label>
               <textarea 
                 className="form-control" 
                 id="comment2" 
@@ -145,8 +143,8 @@ const FinishNowModal = () => {
               ></textarea>
             </div>
             <div className="d-flex justify-content-end">
-              <button type="button" className="btn btn-warning me-3" data-bs-dismiss="modal">返回 / 戻る / Return</button>
-              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleFinish}>提出 / Finished</button>
+              <button type="button" className="btn btn-warning me-3" data-bs-dismiss="modal">{t('return')}</button>
+              <button type="button" className="btn btn-success" data-bs-dismiss="modal" onClick={handleFinish}>{t('submit')}</button>
             </div>
           </div>
         </div>

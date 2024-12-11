@@ -2,6 +2,7 @@ import React, { createContext, useState, useContext, useEffect, useCallback } fr
 import { getUsername } from './utils/LocalStorageUtils';
 import { generateTodoList, getTodoList, getCompletedTasks } from './api';
 import LoadingSpinner from './components/LoadingSpinner';
+import i18n from './i18n';
 
 const AppContext = createContext();
 
@@ -16,6 +17,8 @@ export const AppProvider = ({ children }) => {
   const [hasProcessingTask, setHasProcessingTask] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [language, setLanguage] = useState(i18n.language); // 預設為 i18n 的語言
 
   const updateProcessingTaskStatus = useCallback((updatedList) => {
     setTodoList(updatedList);
@@ -100,6 +103,12 @@ export const AppProvider = ({ children }) => {
     }
   }, [username, fetchTodoList, updateAfterTaskCompletion]);
 
+  // 更新語言的方法
+  const changeLanguage = (lang) => {
+    setLanguage(lang);
+    i18n.changeLanguage(lang); // 更新 i18n 的語言
+  };
+
   return (
     <AppContext.Provider value={{
       username,
@@ -114,7 +123,9 @@ export const AppProvider = ({ children }) => {
       setIsLoading,
       fetchTodoList,
       updateAfterTaskCompletion,
-      error
+      error,
+      language, // 提供語言狀態
+      changeLanguage // 提供更改語言的方法
     }}>
       {isLoading && <LoadingSpinner />}
       {children}
