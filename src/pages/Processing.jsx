@@ -64,21 +64,21 @@ const Processing = () => {
       <Navigation />
       <div className="main my-4 row">
         <div className="col-12 step-font">
-          <div className="row align-items-center justify-content-between">
-            <div className="col-9">
+          <div className="row justify-content-between">
+            <div className="col-8 col-md-9">
               <h3 className="mb-3">{title || 'No Title'}</h3>
+              <ol>
+                {Array.isArray(steps) ? steps.map((step, index) => (
+                  <li className="pb-3" key={index}>{step}</li>
+                )) : <li>No steps available</li>}
+              </ol>
             </div>
-            <div className="col-3 col-md-1">
+            <div className="col-4 col-md-3">
               <img className="w-100" src={pic1 || "/img/love-letter.jpg"} alt={title || 'No Title'} />
             </div>
           </div>
-          <ol>
-            {Array.isArray(steps) ? steps.map((step, index) => (
-              <li className="pb-3" key={index}>{step}</li>
-            )) : <li>No steps available</li>}
-          </ol>
           <div className="row justify-content-center">
-            <div className="col-5 col-md-2">
+            <div className="col-5 col-md-4">
               <img className="w-100" src={pic2 || "/img/reward.png"} alt="Reward" />
             </div>
           </div>
